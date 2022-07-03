@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои задачи</title>
+</head>
+<body>
+    {% extends 'todo/base.html' %}
+    {% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+            {% if todos %}
+                <h1>{{ todos.count }} Текущие задачи{{ todos.count|pluralize }}</h1>
+            {% else %}
+                <h1>Текущие задачи</h1>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+        {% if todos %}
+            <div class="list-group">
+                {% for todo in todos %}
+                    <a href="{% url 'view_todo' todo.id %}"
+                       class="list-group-item list-group-item-action{% if todo.important %}
+                       list-group-item-danger{% endif %}"><b>{{ todo.title }}</b>
+                        {% if todo.memo %} - {{ todo.memo|truncatechars:30 }}{% endif %}</a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h2>Похоже, у вас нет задач! Хорошо сделано.</h2>
+            <br>
+            <a role="button" class="btn btn-primary" href="{% url 'create_todo' %}">Новая задача!</a>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

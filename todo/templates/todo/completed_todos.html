@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Выполненные задачи</title>
+</head>
+<body>
+    {% extends 'todo/base.html' %}
+    {% block content%}
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-10">
+                <h1>Мои выполненные задачи</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-10">
+                <div class="list-group">
+                    {% for todo in todos %}
+                        <li>
+                            <a href="{% url 'view_todo' todo.id %}"
+                               class="list-group-item list-group-item-action{% if todo.important %}
+                               list-group-item-danger{% endif %}"><b>{{ todo.title }}</b>
+                                - Completed {{ todo.datecompleted|date:'M j Y H:i' }}</a>
+                        </li>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>
